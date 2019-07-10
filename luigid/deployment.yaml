@@ -1,0 +1,47 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: luigid
+  labels:
+    app: luigid
+spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+  replicas: 1
+  selector:
+    matchLabels:
+      app: luigid
+  template:
+    metadata:
+      labels:
+        app: luigid
+    spec:
+      containers:
+      - name: luigid
+        securityContext:
+          privileged: true
+        readinessProbe:
+          httpGet:
+            path: /static/visualiser/index.html
+            port: 8082
+          initialDelaySeconds: 20
+          periodSeconds: 10
+          timeoutSeconds: 5
+        resources:
+          limits:
+            memory: 2048Mi
+          requests:
+            cpu: 100m
+            memory: 750Mi
+        image: chhantyal/luigid:latest
+        env:
+        - name: STAGE
+          value: "development"
+        ports:
+        - containerPort: 8080
+          name: http
+        - containerPort: 8082
+          name: luigid

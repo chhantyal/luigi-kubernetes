@@ -1,0 +1,19 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: luigid-service
+  labels:
+    app: luigid
+spec:
+  selector:
+    app: luigid
+  type: NodePort
+  ports:
+  - protocol: TCP
+    port: 8082
+    targetPort: 8082
+    name: luigid
+#  - protocol: TCP
+#    port: 8080
+#    targetPort: 8080
+#    name: http

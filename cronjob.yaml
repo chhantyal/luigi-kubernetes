@@ -1,0 +1,31 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: luigi-example
+spec:
+  schedule: "0 7-16 * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  startingDeadlineSeconds: 300
+  jobTemplate:
+    spec:
+      parallelism: 1
+      template:
+        metadata:
+          labels:
+            app: luigi-example
+        spec:
+          containers:
+          - name: luigi-example
+            resources:
+              limits:
+                memory: 900Mi
+              requests:
+                cpu: 100m
+                memory: 900Mi
+            image: chhantyal/luigi-example:1.2
+            command: ["pipenv"]
+            args: ["run", "python", "-m", "luigi", "--module", "example", "RangeDaily", "--of", "SalesReport", "--start=2019-07-10"]
+          restartPolicy: Never
+      backoffLimit: 2
