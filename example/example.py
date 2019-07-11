@@ -1,4 +1,5 @@
 import csv
+import time
 import sqlite3
 import contextlib
 
@@ -68,6 +69,8 @@ class AggregateTask(luigi.Task):
              WHERE date_ordered='{self.date.isoformat()}' GROUP BY date_ordered
              """
             cursor.execute(sql)
+
+            time.sleep(60)  # sleeping as task run is too fast ;)
 
             with self.output().open("w") as t_file:
                 t_file.write("SUCCESS")
