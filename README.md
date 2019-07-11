@@ -3,7 +3,7 @@
 This is Luigi and Kubernetes demo presented at Europython 2019 in Basel.
 
 Luigi pipeline can be easily triggered from Kubernetes cronjob. 
-By doing so, one can get all the benefits of model container orchestration system like flexible deployment, horizontal scaling and easier maintenance.   
+By doing so, one can get all the benefits of container orchestration system like flexible deployment, horizontal scaling and easier maintenance.   
 
 
 ## Run
